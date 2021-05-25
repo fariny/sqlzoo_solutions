@@ -141,25 +141,128 @@ population > 250000000
 ```
 8.
 ```sql
-
+SELECT name, population, area
+FROM world
+WHERE area > 3000000 AND population < 250000000
+OR
+area < 3000000 AND population > 250000000
 ```
 9.
 ```sql
-
+SELECT name,
+ROUND(population/1000000,2),
+ROUND(GDP/1000000000,2)
+FROM world
+WHERE continent = 'south america'
 ```
 10.
 ```sql
-
+SELECT name, ROUND(GDP/population,-3)
+FROM world
+WHERE GDP >= 1000000000000
 ```
 11.
 ```sql
-
+SELECT name, capital FROM world
+WHERE LEN(name) = LEN(capital)
 ```
 12.
 ```sql
-
+SELECT name, capital FROM world
+WHERE LEFT(name,1) = LEFT(capital,1)
+AND name <> capital
 ```
 13.
+```sql
+SELECT name FROM world
+WHERE name NOT LIKE '% %'
+AND name LIKE '%a%'
+AND name LIKE '%e%'
+AND name LIKE '%i%'
+AND name LIKE '%o%'
+AND name LIKE '%u%'
+```
+## 3 SELECT from Nobel
+1.
+```sql
+SELECT * FROM nobel
+WHERE yr = 1950
+```
+2.
+```sql
+SELECT winner FROM nobel
+WHERE yr = 1962
+AND subject = 'literature'
+```
+3.
+```sql
+SELECT yr, subject FROM nobel
+WHERE winner = 'albert einstein'
+```
+4.
+```sql
+SELECT winner FROM nobel
+WHERE subject = 'peace'
+AND yr >= 2000
+```
+5.
+```sql
+SELECT * FROM nobel
+WHERE subject = 'literature'
+AND yr BETWEEN 1980 AND 1989
+```
+6.
+```sql
+SELECT * FROM nobel
+WHERE winner IN ('theodore roosevelt',
+                  'woodrow wilson',
+                  'jimmy carter',
+                  'barack obama')
+```
+7.
+```sql
+SELECT winner FROM nobel
+WHERE winner LIKE 'john%'
+```
+8.
+```sql
+SELECT yr, subject, winner FROM nobel
+WHERE subject = 'physics' AND yr = 1980
+OR
+subject = 'chemistry' AND yr = 1984
+```
+9.
+```sql
+SELECT yr, subject, winner FROM nobel
+WHERE yr = 1980
+AND subject NOT IN ('chemistry', 'medicine')
+```
+10.
+```sql
+SELECT yr, subject, winner FROM nobel
+WHERE subject = 'medicine' AND yr < 1910
+OR
+subject = 'literature' AND yr >= 2004
+```
+11.
+```sql
+# ALT + 1 2 9 for ü (windows)
+
+SELECT * FROM nobel
+WHERE winner LIKE 'peter grünberg'
+```
+12.
+```sql
+SELECT * FROM nobel
+WHERE winner = 'eugene o''neill'
+```
+13.
+```sql
+SELECT winner, yr, subject FROM nobel
+WHERE winner LIKE 'sir%'
+ORDER BY yr DESC, winner
+```
+14.
 ```sql
 
 ```
