@@ -246,13 +246,16 @@ subject = 'literature' AND yr >= 2004
 ```
 11.
 ```sql
-# ALT + 1 2 9 for ü (windows)
+# ALT + 0 2 2 0 for Ü / ALT + 0 2 5 2 for ü (windows)
 
 SELECT * FROM nobel
 WHERE winner LIKE 'peter grünberg'
 ```
 12.
 ```sql
+# Escaping single quotes:
+# You can't put a single quote in a quote string directly. You can use two single quotes within a quoted string.
+
 SELECT * FROM nobel
 WHERE winner = 'eugene o''neill'
 ```
