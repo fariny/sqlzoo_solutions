@@ -14,7 +14,7 @@
 ## 0 SELECT basics
 1.
 ```sql
-SELECT name FROM world
+SELECT population FROM world
 WHERE name = 'germany'
 ```
 2.
@@ -87,19 +87,25 @@ WHERE capital = name
 12.
 ```sql
 SELECT name FROM world
-WHERE capital = concat(name, ' city')
+WHERE capital = CONCAT(name, ' city')
 ```
 13.
 ```sql
-
+SELECT capital, name FROM world
+WHERE capital LIKE CONCAT(name, '%')
 ```
 14.
 ```sql
-
+SELECT capital, name FROM world
+WHERE capital LIKE CONCAT(name, '%')
+AND capital <> name
 ```
 15.
 ```sql
-
+SELECT name, REPLACE(capital, name, '') AS extension
+FROM world
+WHERE capital LIKE CONCAT(name, '%')
+AND capital <> name
 ```
 ## 2 SELECT from World
 1.
@@ -141,11 +147,10 @@ population > 250000000
 ```
 8.
 ```sql
-SELECT name, population, area
-FROM world
-WHERE area > 3000000 AND population < 250000000
-OR
-area < 3000000 AND population > 250000000
+SELECT name, population, area FROM world
+WHERE area > 3000000
+XOR
+population > 250000000
 ```
 9.
 ```sql
@@ -164,7 +169,7 @@ WHERE GDP >= 1000000000000
 11.
 ```sql
 SELECT name, capital FROM world
-WHERE LEN(name) = LEN(capital)
+WHERE LENGTH(name) = LENGTH(capital)
 ```
 12.
 ```sql
@@ -267,5 +272,53 @@ ORDER BY yr DESC, winner
 ```
 14.
 ```sql
-
+SELECT winner, subject FROM nobel
+WHERE yr = 1984
+ORDER BY subject IN('chemistry', 'physics'), subject, winner
+```
+## 4 SELECT within SELECT
+1.
+```sql
+SELECT name FROM world
+WHERE population >
+  (SELECT population FROM world
+  WHERE name = 'russia')
+```
+2.
+```sql
+SELECT name FROM world
+WHERE continent = 'europe'
+AND GDP/population >
+    (SELECT GDP/population FROM world
+    WHERE name = 'united kingdom')
+```
+3.
+```sql
+SELECT name, continent FROM world
+WHERE continent IN
+  (SELECT continent FROM world
+  WHERE name IN ('argentina', 'australia'))
+ORDER BY name
+```
+4.
+```sql
+SELECT name, population FROM world
+WHERE population >
+  (SELECT population FROM world
+  WHERE name = 'canada')
+AND population <
+  (SELECT population FROM world
+  WHERE name = 'poland')
+```
+5.
+```sql
+SELECT name, 
+  CONCAT(
+    ROUND(
+      population / (SELECT population FROM world WHERE name = 'germany') * 100
+    ,0)
+  ,'%')
+AS percentage
+FROM world
+WHERE continent = 'europe'
 ```
