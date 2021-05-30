@@ -6,6 +6,7 @@
 - **3 SELECT from Nobel**
 - **4 SELECT within SELECT**
 - **5 SUM and COUNT**
+- **5.5 Nobel Prizes: aggregate functions**
 - **6 JOIN**
 - **7 More JOIN operations**
 - **8 Using Null**
@@ -321,4 +322,151 @@ SELECT name,
 AS percentage
 FROM world
 WHERE continent = 'europe'
+```
+6.
+```sql
+SELECT name FROM world
+WHERE GDP > ALL
+   (SELECT GDP FROM world
+   WHERE continent = 'europe'
+   AND GDP > 0)
+```
+7.
+```sql
+SELECT continent, name, area FROM world x
+WHERE area >= ALL
+   (SELECT area FROM world y
+   WHERE x.continent = y.continent)
+```
+8.
+```sql
+SELECT continent, name FROM world x
+WHERE name <= ALL
+   (SELECT name FROM world y
+   WHERE x.continent = y.continent)
+```
+9.
+```sql
+SELECT name, continent, population FROM world x
+WHERE 25000000 >= ALL
+   (SELECT population FROM world y
+   WHERE x.continent = y.continent)
+```
+10.
+```sql
+
+```
+## 5 SUM and COUNT
+1.
+```sql
+SELECT SUM(population) FROM world
+```
+2.
+```sql
+SELECT DISTINCT(continent) FROM world
+```
+3.
+```sql
+SELECT SUM(GDP) FROM world
+WHERE continent = 'africa'
+```
+4.
+```sql
+SELECT COUNT(name) FROM world
+WHERE area >= 1000000
+```
+5.
+```sql
+SELECT SUM(population) FROM world
+WHERE name IN ('estonia', 'latvia', 'lithuania')
+```
+6.
+```sql
+SELECT continent, COUNT(name) FROM world
+GROUP BY continent
+HAVING COUNT(name)
+```
+7.
+```sql
+SELECT continent, COUNT(name) FROM world
+WHERE population >= 10000000
+GROUP BY continent
+HAVING COUNT(name)
+```
+8.
+```sql
+SELECT continent FROM world
+GROUP BY continent
+HAVING SUM(population) >= 100000000
+```
+## 5.5 Nobel Prizes: aggregate functions
+1.
+```sql
+SELECT COUNT(winner) FROM nobel
+```
+2.
+```sql
+SELECT DISTINCT(subject) FROM nobel
+```
+3.
+```sql
+SELECT COUNT(winner) FROM nobel
+WHERE subject = 'physics'
+```
+4.
+```sql
+SELECT subject, COUNT(winner) FROM nobel
+GROUP BY subject
+HAVING COUNT(winner)
+```
+5.
+```sql
+SELECT subject, MIN(yr) FROM nobel
+GROUP BY subject
+HAVING MIN(yr)
+```
+6.
+```sql
+SELECT subject, COUNT(winner) FROM nobel
+WHERE yr = 2000
+GROUP BY subject
+HAVING COUNT(winner)
+```
+7.
+```sql
+SELECT subject, COUNT(DISTINCT(winner)) FROM nobel
+GROUP BY subject
+HAVING COUNT(DISTINCT(winner))
+```
+8.
+```sql
+SELECT subject, COUNT(DISTINCT(yr)) FROM nobel
+GROUP BY subject
+HAVING COUNT(DISTINCT(yr))
+```
+9.
+```sql
+SELECT yr FROM nobel
+WHERE subject = 'physics'
+GROUP BY yr
+HAVING COUNT(winner) = 3
+```
+10.
+```sql
+SELECT winner FROM nobel
+GROUP BY winner
+HAVING COUNT(winner) > 1
+```
+11.
+```sql
+SELECT winner FROM nobel
+GROUP BY winner
+HAVING COUNT(DISTINCT(subject)) > 1
+```
+12.
+```sql
+SELECT yr, subject FROM nobel
+WHERE yr >= 2000
+GROUP BY yr, subject
+HAVING COUNT(winner) = 3
 ```
