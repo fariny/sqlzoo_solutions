@@ -470,3 +470,82 @@ WHERE yr >= 2000
 GROUP BY yr, subject
 HAVING COUNT(winner) = 3
 ```
+## 6 JOIN
+1.
+```sql
+SELECT matchid, player FROM goal
+WHERE teamid = 'ger'
+```
+2.
+```sql
+SELECT id, stadium, team1, team2 FROM game
+WHERE id = 1012
+```
+3.
+```sql
+SELECT player, teamid, stadium, mdate
+FROM game JOIN goal ON (game.id = matchid)
+WHERE teamid = 'ger'
+```
+4.
+```sql
+SELECT team1, team2, player
+FROM game JOIN goal ON (game.id = matchid)
+WHERE player LIKE 'mario%'
+```
+5.
+```sql
+SELECT player, teamid, coach, gtime
+FROM goal JOIN eteam ON (teamid = eteam.id)
+WHERE gtime <= 10
+```
+6.
+```sql
+SELECT mdate, teamname
+FROM game JOIN eteam ON (team1 = eteam.id)
+WHERE coach = 'fernando santos'
+```
+7.
+```sql
+SELECT player
+FROM goal JOIN game ON (matchid = game.id)
+WHERE stadium = 'national stadium, warsaw'
+```
+8.
+```sql
+SELECT DISTINCT(player)
+FROM goal JOIN game ON (matchid = game.id)
+WHERE teamid != 'ger' AND team1 = 'ger'
+OR
+teamid != 'ger' AND team2 = 'ger'
+```
+9.
+```sql
+SELECT teamname, COUNT(player)
+FROM goal JOIN eteam ON (teamid = eteam.id)
+GROUP BY teamname
+```
+10.
+```sql
+SELECT stadium, COUNT(player)
+FROM game JOIN goal ON (game.id = matchid)
+GROUP BY stadium
+```
+11.
+```sql
+SELECT matchid, mdate, COUNT(player)
+FROM game JOIN goal ON (game.id = matchid)
+WHERE team1 = 'pol' OR team2 = 'pol'
+GROUP BY matchid, mdate
+```
+12.
+```sql
+SELECT matchid, mdate, COUNT(player)
+FROM game JOIN goal ON (game.id = matchid)
+WHERE teamid = 'ger'
+GROUP BY matchid, mdate
+```
+13.
+```sql
+
+```
