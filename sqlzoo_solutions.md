@@ -8,6 +8,7 @@
 - **5 SUM and COUNT**
 - **5.5 Nobel Prizes: aggregate functions**
 - **6 JOIN**
+- **Old JOIN**
 - **7 More JOIN operations**
 - **8 Using Null**
 - **8+ Numeric examples**
@@ -548,4 +549,59 @@ GROUP BY matchid, mdate
 13.
 ```sql
 
+```
+## Old JOIN
+1.
+```sql
+SELECT who, name
+FROM ttms JOIN country ON (ttms.country = country.id)
+WHERE games = 2000
+```
+2.
+```sql
+SELECT who, color
+FROM ttms JOIN country ON (ttms.country = country.id)
+WHERE name = 'sweden'
+```
+3.
+```sql
+SELECT games
+FROM ttms JOIN country ON (ttms.country = country.id)
+WHERE name = 'china' AND color = 'gold'
+```
+4.
+```sql
+SELECT who
+FROM ttws JOIN games ON (ttws.games = games.yr)
+WHERE city = 'barcelona'
+```
+5.
+```sql
+SELECT city, color
+FROM ttws JOIN games ON (ttws.games = games.yr)
+WHERE who = 'jing chen'
+```
+6.
+```sql
+SELECT who, city
+FROM ttws JOIN games ON (ttws.games = games.yr)
+WHERE color = 'gold'
+```
+7.
+```sql
+SELECT games, color
+FROM ttmd JOIN team ON (ttmd.team = team.id)
+WHERE name = 'yan sen'
+```
+8.
+```sql
+SELECT name
+FROM ttmd JOIN team ON (ttmd.team = team.id)
+WHERE color = 'gold' AND games = 2004
+```
+9.
+```sql
+SELECT name
+FROM ttmd JOIN team ON (ttmd.team = team.id)
+WHERE country = 'fra'
 ```
