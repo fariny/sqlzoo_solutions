@@ -605,3 +605,99 @@ SELECT name
 FROM ttmd JOIN team ON (ttmd.team = team.id)
 WHERE country = 'fra'
 ```
+## 7 More JOIN operations
+1.
+```sql
+SELECT id, title FROM movie
+WHERE yr = 1962
+```
+2.
+```sql
+SELECT yr FROM movie
+WHERE title = 'citizen kane'
+```
+3.
+```sql
+SELECT id, title, yr FROM movie
+WHERE title LIKE '%star trek%'
+ORDER BY yr
+```
+4.
+```sql
+SELECT id FROM actor
+WHERE name = 'glenn close'
+```
+5.
+```sql
+SELECT id FROM movie
+WHERE title = 'casablanca'
+```
+6.
+```sql
+SELECT name
+FROM actor JOIN casting ON (actor.id = casting.actorid)
+WHERE movieid = 11768
+```
+7.
+```sql
+SELECT name
+FROM actor
+  JOIN casting ON (actor.id = casting.actorid)
+  JOIN movie ON (casting.movieid = movie.id)
+WHERE title = 'alien'
+```
+8.
+```sql
+SELECT title
+FROM movie
+  JOIN casting ON (movie.id = casting.movieid)
+  JOIN actor ON (casting.actorid = actor.id)
+WHERE name = 'harrison ford'
+```
+9.
+```sql
+SELECT title
+FROM movie
+  JOIN casting ON (movie.id = casting.movieid)
+  JOIN actor ON (casting.actorid = actor.id)
+WHERE name = 'harrison ford' AND ord != 1
+```
+10.
+```sql
+SELECT title, name
+FROM movie
+  JOIN casting ON (movie.id = casting.movieid)
+  JOIN actor ON (casting.actorid = actor.id)
+WHERE yr = 1962 AND ord = 1
+```
+11.
+```sql
+SELECT yr, COUNT(title)
+FROM movie
+  JOIN casting ON (movie.id = casting.movieid)
+  JOIN actor ON (casting.actorid = actor.id)
+WHERE name = 'rock hudson'
+GROUP BY yr
+HAVING COUNT(yr) > 2
+```
+12.
+```sql
+
+```
+13.
+```sql
+SELECT name
+FROM actor
+  JOIN casting ON (actor.id = casting.actorid)
+WHERE ord = 1
+GROUP BY name
+HAVING COUNT(ord) >= 15
+```
+14.
+```sql
+
+```
+15.
+```sql
+
+```
