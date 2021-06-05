@@ -695,7 +695,13 @@ HAVING COUNT(ord) >= 15
 ```
 14.
 ```sql
-
+SELECT title, COUNT(actorid)
+FROM movie
+  JOIN casting ON (movie.id = casting.movieid)
+WHERE yr = 1978
+GROUP BY title
+HAVING COUNT(actorid)
+ORDER BY COUNT(actorid) DESC, title
 ```
 15.
 ```sql
